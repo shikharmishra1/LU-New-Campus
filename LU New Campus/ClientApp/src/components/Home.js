@@ -1,26 +1,12 @@
 import React, { Component } from 'react';
 
-export class Home extends Component {
-  static displayName = Home.name;
-
-  render() {
+export default function Home(props)
+{
+    let iframe = 'hi';
     return (
-      <div>
-        <h1>Hello, world!</h1>
-            <p className="bg-gray-200 text-gray-700 font-bold mb-5">Welcome to your new single-page application, built with:</p>
-        <ul>
-          <li><a href='https://get.asp.net/'>ASP.NET Core</a> and <a href='https://msdn.microsoft.com/en-us/library/67ef8sbd.aspx'>C#</a> for cross-platform server-side code</li>
-          <li><a href='https://facebook.github.io/react/'>React</a> for client-side code</li>
-          <li><a href='http://getbootstrap.com/'>Bootstrap</a> for layout and styling</li>
-        </ul>
-        <p>To help you get started, we have also set up:</p>
-        <ul>
-          <li><strong>Client-side navigation</strong>. For example, click <em>Counter</em> then <em>Back</em> to return here.</li>
-          <li><strong>Development server integration</strong>. In development mode, the development server from <code>create-react-app</code> runs in the background automatically, so your client-side resources are dynamically built on demand and the page refreshes when you modify any file.</li>
-          <li><strong>Efficient production builds</strong>. In production mode, development-time features are disabled, and your <code>dotnet publish</code> configuration produces minified, efficiently bundled JavaScript files.</li>
-        </ul>
-        <p>The <code>ClientApp</code> subdirectory is a standard React application based on the <code>create-react-app</code> template. If you open a command prompt in that directory, you can run <code>npm</code> commands such as <code>npm test</code> or <code>npm install</code>.</p>
-      </div>
-    );
-  }
+        <div>
+            <iframe src="https://www.google.com/maps/embed?pb=!4v1675355032255!6m8!1m7!1sCAoSLEFGMVFpcE9JOUZDQkhqZGRGY3E4MjJUN2wwcjNFMkJ5OHUzUjJGRjlMa2tF!2m2!1d26.9293611!2d80.93854309999999!3f340.7158395530528!4f-7.589160354832629!5f0.7820865974627469" className="w-full" style={{border:0, height:'86vh'}} allowfullscreen="no" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        
+        );
 }

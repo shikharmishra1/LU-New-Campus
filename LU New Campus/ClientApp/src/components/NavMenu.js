@@ -24,25 +24,30 @@ export class NavMenu extends Component {
   render() {
     return (
       <header>
-        <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" container light>
-          <NavbarBrand tag={Link} to="/">LU_New_Campus</NavbarBrand>
+        <Navbar className="p-0 navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow " container light>
+                <img src="https://www.lkouniv.ac.in/images/logo.png"/>
+         
           <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
           <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
-            <ul className="navbar-nav flex-grow">
-              <NavItem>
-                <NavLink tag={Link} className="text-dark" to="/">Home</NavLink>
+                    <div className="text-xl font-semibold ">
+                        <ul className="navbar-nav flex-grow justify-end">
+            
+                            <NavItem className=" text-center ">
+                                <NavLink tag={Link} className="text-dark hover:text-slate-50" to="/">Home</NavLink>
               </NavItem>
               <NavItem>
                 <NavLink tag={Link} className="text-dark" to="/counter">News</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink tag={Link} className="text-dark" to="/fetch-data">Study Materials</NavLink>
+                <NavLink tag={Link} className="text-dark" to="/studymaterials">Study Materials</NavLink>
                 </NavItem>
                 <NavItem>
                     <NavLink tag={Link} className="text-dark" to="/fetch-data">Forum</NavLink>
-                </NavItem>
+                            </NavItem>
+                            
 
-            </ul>
+                    </ul>
+                </div>
           </Collapse>
         </Navbar>
       </header>

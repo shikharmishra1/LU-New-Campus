@@ -3,7 +3,9 @@
   text-align: center;
   word-break: break-all;
 }
-
+.navbar {
+    margin-bottom: 0px;
+}
 html {
   font-size: 14px;
 }

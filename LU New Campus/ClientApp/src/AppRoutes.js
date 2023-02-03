@@ -1,6 +1,8 @@
+import { Material } from "../../../../../../node_modules/three/build/three";
 import { Counter } from "./components/Counter";
 import { FetchData } from "./components/FetchData";
-import { Home } from "./components/Home";
+import Home  from "./components/Home";
+import Study from "./components/Study";
 
 const AppRoutes = [
   {
@@ -12,8 +14,8 @@ const AppRoutes = [
     element: <Counter />
   },
   {
-    path: '/fetch-data',
-    element: <FetchData />
+    path: '/studymaterials',
+    element: <Study />
   }
 ];
 
