@@ -18,7 +18,7 @@ export default function StudyFilter() {
     }
 
     return (
-        <nav className="z-20 flex shrink-0 grow-0 justify-around gap-4 border-t border-gray-200 bg-white/50 p-2.5 shadow-lg backdrop-blur-lg dark:border-slate-600/60 dark:bg-slate-800/50 fixed top-2/4 -translate-y-2/4 left-[120px] min-h-[auto] min-w-[64px] flex-col rounded-lg border">
+        <nav className="glass-box left-[120px] top-2/4 -translate-y-2/4">
         <div className="flex gap-2"><div class="text-center text-base font-medium text-white self-center"> Course: </div>
                 <select onChange={addYear} id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 <option selected>Choose an option</option>
