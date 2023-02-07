@@ -1,11 +1,13 @@
 ﻿import React, { useState } from 'react';
 import StudyFilter from './Study_filter.js';
-import StudySearch from './StudySearch.js'
+import StudySearch from './StudySearch.js';
+import UploadStudy from './UploadStudy.js';
 import { Transition } from '@headlessui/react';
 export default function Study()
 {
     const [showfilter, setshowfilter] = useState(false);
     const [showSearch, setShowSearch] = useState(false);
+    const [showUpload, setShowUpload] = useState(false);
     //document.body.style = 'background: red;';
     return (
         
@@ -13,7 +15,7 @@ export default function Study()
                 class="relative bg-gray-50 dark:bg-slate-900 w-screen h-screen pattern"
             >
             <nav className="z-20 flex shrink-0 grow-0 justify-around gap-4 border-t border-gray-200 bg-white/50 p-2.5 shadow-lg backdrop-blur-lg dark:border-slate-600/60 dark:bg-slate-800/50 fixed top-2/4 -translate-y-2/4 left-6 min-h-[auto] min-w-[64px] flex-col rounded-lg border">
-                <a class="flex aspect-square min-h-[32px] w-16 flex-col items-center justify-center gap-1 rounded-md p-1.5 bg-indigo-50 text-indigo-600 dark:bg-sky-900 dark:text-sky-50" target="_blank">
+                <a onClick={(e) => { setShowUpload(!showUpload); setShowSearch(false); setshowfilter(false) }} class="flex aspect-square min-h-[32px] w-16 flex-col items-center justify-center gap-1 rounded-md p-1.5 bg-indigo-50 text-indigo-600 dark:bg-sky-900 dark:text-sky-50" target="_blank">
 
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cloud-arrow-up" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M7.646 5.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 6.707V10.5a.5.5 0 0 1-1 0V6.707L6.354 7.854a.5.5 0 1 1-.708-.708l2-2z" />
@@ -57,7 +59,7 @@ export default function Study()
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
             >
-                <StudyFilter className="left-[120px] top-2/4 -translate-y-2/4"/>
+                <StudyFilter position='left-[120px] top-[57%] -translate-y-2/4'/>
             </Transition>
             <Transition
                 show={showSearch}
@@ -68,7 +70,18 @@ export default function Study()
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
             >
-                <StudySearch className="left-[120px] bottom-[194px]" />
+                <StudySearch className="glass-box text-amber-50 left-[120px] bottom-[22%] -translate-y-2/4" />
+            </Transition>
+            <Transition
+                show={showUpload}
+                enter="transition-opacity duration-90"
+                enterFrom="opacity-0"
+                enterTo="opacity-100"
+                leave="transition-opacity duration-170"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+            >
+                <UploadStudy position="left-[120px] bottom-[32%]" />
             </Transition>
             </div>
        
