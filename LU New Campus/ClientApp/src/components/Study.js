@@ -1,13 +1,55 @@
-﻿import React, { useState } from 'react';
+﻿import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import StudyFilter from './Study_filter.js';
 import StudySearch from './StudySearch.js';
 import UploadStudy from './UploadStudy.js';
 import { Transition } from '@headlessui/react';
+import StudyMatPost from './StudyMatPost.js';
 export default function Study()
 {
     const [showfilter, setshowfilter] = useState(false);
     const [showSearch, setShowSearch] = useState(false);
     const [showUpload, setShowUpload] = useState(false);
+
+
+    let postdata = [];
+    let index;
+    let title;
+    let content;
+    const [post, setPost] = useState([null]);
+    function addPost() {
+        //setNyear([]);
+        
+        
+
+    }
+
+    
+    useEffect(() => {
+        axios.get('/api/studymat',
+
+            {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        ).then(function (res) {
+            postdata = res.data;
+            console.log(postdata[0].Title);
+            for (let i = 0; i <= postdata.length; i++) {
+                index = i;
+                title = postdata[i].Title;
+                content = postdata[i].Content;
+                console.log(title);
+                setPost(prev => [...prev, <StudyMatPost title={ title } content={content} />]);
+            }
+            
+        })
+            .catch(function (error) {
+                console.log(error.response);
+                console.log(error.request);
+            });
+    }, [])
     //document.body.style = 'background: red;';
     return (
         
@@ -49,7 +91,9 @@ export default function Study()
                     <small class="text-center text-xs font-medium"> Search </small>
                 </a>
             </nav>  
-            
+            <div className="glass-box relative py-2 w-[60%] gap-2 flex border-white left-[130px] top-[10px]">
+                {post }
+            </div>
             <Transition
                 show={showfilter}
                 enter="transition-opacity duration-90"
@@ -59,7 +103,7 @@ export default function Study()
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
             >
-                <StudyFilter position='left-[120px] top-[57%] -translate-y-2/4'/>
+                <StudyFilter position='w-[30%] relative left-[120px] top-[145px]'/>
             </Transition>
             <Transition
                 show={showSearch}
@@ -70,7 +114,7 @@ export default function Study()
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
             >
-                <StudySearch className="glass-box text-amber-50 left-[120px] bottom-[22%] -translate-y-2/4" />
+                <StudySearch className="glass-box text-amber-50 left-[120px] top-[280px] relative" />
             </Transition>
             <Transition
                 show={showUpload}
@@ -81,7 +125,7 @@ export default function Study()
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
             >
-                <UploadStudy position="left-[120px] bottom-[32%]" />
+                <UploadStudy position="flex fixed left-[120px]  top-[120px]" />
             </Transition>
             </div>
        
