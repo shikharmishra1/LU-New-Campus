@@ -1,9 +1,9 @@
 ﻿import React from 'react';
 
-export default function StudySearch()
+export default function StudySearch(props)
 {
-    return (<div className="flex absolute">
-        <input className="glass-box text-amber-50 " placeholder="Input text and press enter"/>
+    return (<div className="flex ">
+        <input className={props.className } placeholder="Input text and press enter"/>
         </div>
         );
 }
