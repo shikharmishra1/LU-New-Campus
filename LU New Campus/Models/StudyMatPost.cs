@@ -26,7 +26,7 @@ namespace LU_New_Campus.Models
         public string? Content { get; set; }
 
         [BsonElement("Course")]
-        [RegularExpression("B.tech|BCA|MCA|LLB", ErrorMessage = "The course doesn't exist or not added to the site yet")]
+       // [RegularExpression("btech|BCA|MCA|LLB", ErrorMessage = "The course doesn't exist or not added to the site yet")]
         [BsonIgnoreIfNull]
         public string? Course { get; set; }
 

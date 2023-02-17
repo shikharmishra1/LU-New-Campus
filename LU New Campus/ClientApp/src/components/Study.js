@@ -12,7 +12,7 @@ export default function Study()
     const [showUpload, setShowUpload] = useState(false);
 
 
-    let postdata = [];
+    let post_data = [];
     let index;
     let title;
     let content;
@@ -34,14 +34,14 @@ export default function Study()
                 }
             }
         ).then(function (res) {
-            postdata = res.data;
-            console.log(postdata[0].Title);
-            for (let i = 0; i <= postdata.length; i++) {
+            post_data = res.data;
+            console.log(post_data[0].Title);
+            for (let i = 0; i <= post_data.length; i++) {
                 index = i;
-                title = postdata[i].Title;
-                content = postdata[i].Content;
+                title = post_data[i].Title;
+                content = post_data[i].Content;
                 console.log(title);
-                setPost(prev => [...prev, <StudyMatPost title={ title } content={content} />]);
+                setPost(prev => [...prev, <StudyMatPost title={ post_data[i].Title } content={post_data[i].Content} />]);
             }
             
         })
@@ -91,7 +91,7 @@ export default function Study()
                     <small class="text-center text-xs font-medium"> Search </small>
                 </a>
             </nav>  
-            <div className="glass-box relative py-2 w-[60%] gap-2 flex border-white left-[130px] top-[10px]">
+            <div className="glass-box relative py-2 w-[60%] gap-4 flex  left-[130px] top-[10px]">
                 {post }
             </div>
             <Transition
@@ -125,7 +125,7 @@ export default function Study()
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
             >
-                <UploadStudy position="flex fixed left-[120px]  top-[120px]" />
+                <UploadStudy position="flex fixed left-[120px] top-[120px]" />
             </Transition>
             </div>
        
