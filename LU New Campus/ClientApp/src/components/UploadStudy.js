@@ -1,12 +1,15 @@
-﻿import React, { useState } from 'react';
+﻿import React, { useState, useContext, useRef } from 'react';
 import StudyFilter from './Study_filter';
 import axios from 'axios';
+import { post } from 'jquery';
 export default function UploadStudy(props) {
     let year2;
 
     const [Nyear, setNyear] = useState([<option value={year2}>choose an option</option>]);
     const [showFile, setShowFile] = useState(false);
     const [fileName, setFileName] = useState("");
+
+    //Adds Suitable Year options associated with the course
     function addYear(e) {
         setNyear([]);
         let val = e.target.value;
@@ -14,27 +17,38 @@ export default function UploadStudy(props) {
         console.log(e.target.children[e.target.selectedIndex].attributes['year'].value);
         year2 = year;
         for (let i = 1; i <= year; i++) {
-            setNyear(prev => [...prev, <option value={year2}>{i}</option>]);
+            setNyear(prev => [...prev, <option value={i}>{i}</option>]);
         }
+        post_data.Course = e.target.value;
+        
 
     }
-    let postData = JSON.stringify({
+    let post_data = useRef(
+        {
+            Title: "",
+            Content: "",
+            Course: "",
+            Year: 1,
+        });
 
-        Title: '',
-        Content: '',    
+    //Post: Creates Study Material
+    function createStudyMat(e) {
 
-    });
-    function createStudyMat() {
-        
+        if (post_data.Year == null)
+            post_data.Year = 1;
+; 
+
         axios.post('/api/studymat',
-            postData,
+            post_data,
             {
                 headers: {
                     'Content-Type': 'application/json'
                 }
             }
         ).then(function (response) {
+            
             console.log(response);
+            console.log(post_data);
 
         })
             .catch(function (error) {
@@ -59,29 +73,41 @@ export default function UploadStudy(props) {
                                 {
                                     setShowFile(true);
                                     setFileName(e.target.files[0].name);
+                                    
                                 }
                             }} id="dropzone-file" type="file" class="hidden" />
                     </label>
                 </div>
                 </div></div>
-            {showFile ? <div className="flex text-base text-white">Uploaded file: &nbsp;<div className="text-pink-500"> {fileName}</div></div>:null  }
+            {showFile ? <div className="flex text-base text-white">Uploaded file: &nbsp;<div className="text-pink-500"> {fileName}</div></div> : null}
+
             <div className="flex gap-2 mb-4"><div class="text-center text-base font-medium text-white self-center"> Title: </div><input onChange={(e) => {
-                postData.Title = e.target.value;
-                console.log("hi");
+
+                post_data.Title = e.target.value;
+                
+                console.log(post_data.Title);
             }} className="relative glass-box w-[82%] text-pink-500" /></div>
-            <div className="flex gap-2 mb-4"><div class="text-center text-base font-medium text-white self-center"> Content: </div><textarea className=" relative text-sm  glass-box w-[82%] text-pink-700" /></div>
+
+
+            <div className="flex gap-2 mb-4"><div class="text-center text-base font-medium text-white self-center"> Content: </div><textarea onChange={(e) => {
+                post_data.Content = e.target.value;
+                console.log(post_data.Content);
+            }} className=" relative text-sm  glass-box w-[82%] text-pink-700" /></div>
            <div className="flex gap-2">
             <div className="flex gap-2"><div class="text-center text-base font-medium text-white self-center"> Course: </div>
-                <select onChange={addYear} id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <select onChange={addYear} id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     <option selected>Choose an option</option>
                     <option value="btech" year="4">B.Tech</option>
                     <option value="BCA" year="3">BCA</option>
                     <option value="MCA" year="2">MCA</option>
                     <option value="LLB" year="5">LLB</option>
                 </select></div>
-                <div className="flex gap-2"><div class="text-center text-base font-medium text-white self-center"> Year: </div>
+                <div className="flex gap-2"><div className="text-center text-base font-medium text-white self-center"> Year: </div>
                    
-                <select id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <select onChange={(e) => {
+                        post_data.Year = parseInt(e.target.value);
+                        
+                    }} class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 
                         {Nyear}
 
@@ -91,7 +117,7 @@ export default function UploadStudy(props) {
                 </div>
                 
             </div>
-            <div className="flex justify-center"><button type="button" class="text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-purple-400 dark:text-pink-400 dark:hover:text-white dark:hover:bg-pink-600 dark:focus:ring-pink-600">Upload</button></div>
+            <div className="flex justify-center"><button onClick={ createStudyMat } type="button" class="text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-purple-400 dark:text-pink-400 dark:hover:text-white dark:hover:bg-pink-600 dark:focus:ring-pink-600">Upload</button></div>
         </nav></div>
         );
 }
