@@ -5,6 +5,8 @@ import StudySearch from './StudySearch.js';
 import UploadStudy from './UploadStudy.js';
 import { Transition } from '@headlessui/react';
 import StudyMatPost from './StudyMatPost.js';
+import StudyMatPreview from './StudyMatPost_preview.js';
+
 export default function Study()
 {
     const [showfilter, setshowfilter] = useState(false);
@@ -90,9 +92,14 @@ export default function Study()
 
                     <small class="text-center text-xs font-medium"> Search </small>
                 </a>
-            </nav>  
-            <div className="glass-box relative py-2 w-[60%] gap-4 flex  left-[130px] top-[10px]">
+            </nav> 
+            <div className="flex ml-[130px] justify-start relative gap-2 ">
+            <div className="glass-box relative py-2 w-[60%]  flex top-[10px]">
                 {post }
+            </div>
+            <div className="">
+                <StudyMatPreview/>
+                </div>
             </div>
             <Transition
                 show={showfilter}

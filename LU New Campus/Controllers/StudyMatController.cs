@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
 using LU_New_Campus.Models;
 using LU_New_Campus.Services;
+using Newtonsoft.Json;
+using MongoDB.Bson;
 
 namespace LU_New_Campus.Controllers
 {
@@ -22,12 +24,15 @@ namespace LU_New_Campus.Controllers
         await _lunc_service.GetAsync();
 
         [HttpPost]
-        public async Task<IActionResult> Post(StudyMatPost newStudyMatPost)
+        public async Task<IActionResult> Post([FromForm] StudyMatPost newStudyMatPost)
         {
+            Console.Write(newStudyMatPost.Images);
             await _lunc_service.CreateAsync(newStudyMatPost);
 
             return CreatedAtAction(nameof(Get), new { id = newStudyMatPost.Id }, newStudyMatPost);
         }
+
+        
 
     }
 }

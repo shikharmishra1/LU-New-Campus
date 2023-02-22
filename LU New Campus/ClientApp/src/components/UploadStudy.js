@@ -1,4 +1,4 @@
-﻿import React, { useState, useContext, useRef } from 'react';
+﻿import React, { useState, useContext, useRef, useEffect } from 'react';
 import StudyFilter from './Study_filter';
 import axios from 'axios';
 import { post } from 'jquery';
@@ -13,49 +13,65 @@ export default function UploadStudy(props) {
     function addYear(e) {
         setNyear([]);
         let val = e.target.value;
+        
         let year = e.target.children[e.target.selectedIndex].attributes['year'].value;
         console.log(e.target.children[e.target.selectedIndex].attributes['year'].value);
         year2 = year;
         for (let i = 1; i <= year; i++) {
             setNyear(prev => [...prev, <option value={i}>{i}</option>]);
         }
-        post_data.Course = e.target.value;
+        formData.current.set('Course', e.target.value);
         
 
     }
-    let post_data = useRef(
+    const formData = useRef(new FormData());
+    
+    const post_data = useRef(
         {
             Title: "",
             Content: "",
             Course: "",
             Year: 1,
+            Documents:[{
+                Name: "UwU",
+                URL:"UWU"
+            }, {
+                Name: "hey",
+                URL: "Hey"
+                }],
+            Images: [],
         });
+   
 
     //Post: Creates Study Material
     function createStudyMat(e) {
-
-        if (post_data.Year == null)
-            post_data.Year = 1;
-; 
-
+        
+        if (formData.current.get('Year') == null)
+            formData.current.set('Year',1);
+;       
+       
         axios.post('/api/studymat',
-            post_data,
+            formData.current,
             {
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'multipart/form-data',
                 }
             }
         ).then(function (response) {
             
             console.log(response);
-            console.log(post_data);
+            for (const value of formData.current.values()) {
+                console.log(value);
+            }
 
         })
             .catch(function (error) {
+                console.log(post_data);
                 console.log(error.response);
                 console.log(error.request);
             });
     }
+    
     return (<div className="flex">
         <nav className={"glass-box " + props.position}>
             <div>
@@ -67,12 +83,27 @@ export default function UploadStudy(props) {
                             <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
                             <p class="text-xs text-gray-500 dark:text-gray-400">PDF, DOCS, PPT or TXT (MAX. 10mb)</p>
                         </div>
-                            <input onChange={(e) =>
+                            <input accept='.pdf, .docx, .ppt, .png, .jpg' multiple="multiple" onChange={async (e) =>
                             {
                                 if (e.target.files[0])
                                 {
-                                    setShowFile(true);
-                                    setFileName(e.target.files[0].name);
+                                    let str = "";
+                                    
+                                    for (let i = 0; i < e.target.files.length; i++)
+                                    {
+                                        formData.current.append('Images', e.target.files[i], e.target.files[i].name )
+                                        
+                                        if (i == (e.target.files.length) - 1)
+                                        {
+                                            str += e.target.files[i].name;
+                                            break;
+                                        }
+                                        str += e.target.files[i].name +"," +" ";
+                                    }
+                                    
+                                    
+                                    console.log(formData.current.getAll('Images'));
+                                    setFileName(str);
                                     
                                 }
                             }} id="dropzone-file" type="file" class="hidden" />
@@ -83,15 +114,18 @@ export default function UploadStudy(props) {
 
             <div className="flex gap-2 mb-4"><div class="text-center text-base font-medium text-white self-center"> Title: </div><input onChange={(e) => {
 
-                post_data.Title = e.target.value;
+                formData.current.set('Title', e.target.value);
+               
                 
-                console.log(post_data.Title);
+               
+
+                
             }} className="relative glass-box w-[82%] text-pink-500" /></div>
 
 
             <div className="flex gap-2 mb-4"><div class="text-center text-base font-medium text-white self-center"> Content: </div><textarea onChange={(e) => {
-                post_data.Content = e.target.value;
-                console.log(post_data.Content);
+                formData.current.set('Content',e.target.value);
+                
             }} className=" relative text-sm  glass-box w-[82%] text-pink-700" /></div>
            <div className="flex gap-2">
             <div className="flex gap-2"><div class="text-center text-base font-medium text-white self-center"> Course: </div>
@@ -105,7 +139,7 @@ export default function UploadStudy(props) {
                 <div className="flex gap-2"><div className="text-center text-base font-medium text-white self-center"> Year: </div>
                    
                     <select onChange={(e) => {
-                        post_data.Year = parseInt(e.target.value);
+                        formData.current.set('Year',parseInt(e.target.value));
                         
                     }} class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 

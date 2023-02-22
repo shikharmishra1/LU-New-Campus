@@ -1,5 +1,6 @@
 using LU_New_Campus.Models;
 using LU_New_Campus.Services;
+using MongoDB.Bson.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,7 @@ builder.Services.AddControllersWithViews().AddJsonOptions(
 builder.Services.Configure<LUNC_DB_Settings>(
 builder.Configuration.GetSection("LU_NC_DB"));
 builder.Services.AddSingleton<LUNC_Service>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

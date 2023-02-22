@@ -4,7 +4,7 @@ export default function StudyMatPost(props)
 {
     
     return (
-        <div >
+        
         <div className="glass-box flex border-white m-0 p-0 relative py-2">
         <div className="text-white px-2 text-lg font-bold">
             { props.title }
@@ -36,5 +36,5 @@ export default function StudyMatPost(props)
         </div>
 
             </div>
-        </div>);
+        );
 }
