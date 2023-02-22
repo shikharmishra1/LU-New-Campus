@@ -29,11 +29,11 @@ public class LUNC_Service
     public async Task<StudyMatPost?> GetAsync(string id) =>
         await _studyMatCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
 
-    public async Task CreateAsync(StudyMatPost newBook) =>
-        await _studyMatCollection.InsertOneAsync(newBook);
+    public async Task CreateAsync(StudyMatPost newPost) =>
+        await _studyMatCollection.InsertOneAsync(newPost);
 
-    public async Task UpdateAsync(string id, StudyMatPost updatedBook) =>
-        await _studyMatCollection.ReplaceOneAsync(x => x.Id == id, updatedBook);
+    public async Task UpdateAsync(string id, StudyMatPost updatedPost) =>
+        await _studyMatCollection.ReplaceOneAsync(x => x.Id == id, updatedPost);
 
     public async Task RemoveAsync(string id) =>
         await _studyMatCollection.DeleteOneAsync(x => x.Id == id);
